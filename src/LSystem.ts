@@ -4,6 +4,7 @@ class LSystem {
   public static mapRules(rules: IRule[]) {
     return rules.reduce((rulesObj: object, rule: IRule) => {
       rulesObj[rule.from] = rule.to;
+      return rulesObj;
     }, Object());
   }
 
