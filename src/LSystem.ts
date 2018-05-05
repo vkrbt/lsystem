@@ -24,6 +24,14 @@ class LSystem {
     return output;
   }
 
+  public getAxiom(): string {
+    return this.axiom;
+  }
+
+  public getRules(): IRule[] {
+    return this.rules;
+  }
+
   private map(axiom: string): string {
     let output: string[] = axiom.split('');
     output = output.map((letter) => {
