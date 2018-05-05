@@ -7,7 +7,7 @@ class Drawer {
       switch (letter) {
         case 'F':
         case 'G':
-          canvas.drawLine(length);
+          canvas.drawLine(length, 0.5);
           return;
         case '+':
           canvas.rotate(angle);

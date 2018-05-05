@@ -10,12 +10,14 @@ class Canvas2D implements ICanvas {
   private angle: number = 0;
   private lastpos: IPoint = { x: 0, y: 0 };
   private parent: HTMLElement;
+  private opacity: number;
 
   constructor(
     width: number,
     height: number,
     parent: HTMLElement = document.body,
     id: string = 'canvas',
+    opacity: number = 1,
   ) {
     const canvas = document.createElement('canvas');
     canvas.id = id;
@@ -25,6 +27,7 @@ class Canvas2D implements ICanvas {
     this.parent = parent;
     this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     this.resize = this.resize.bind(this);
+    this.opacity = opacity;
     // window.addEventListener('resize', this.resize);
   }
   public moveTo(x: number, y: number) {
@@ -33,7 +36,8 @@ class Canvas2D implements ICanvas {
     this.lastpos = { x, y };
   }
 
-  public drawLine(length: number, color: string = '#000') {
+  public drawLine(length: number, opacity: number = this.opacity, color: string = 'rgb(0,0,0)') {
+    this.ctx.strokeStyle = `rgba(${color.slice(4, -1)}, ${opacity})`;
     const xPos = length * Math.cos(this.angle);
     const yPos = length * Math.sin(this.angle);
     const point = { x: this.lastpos.x + xPos, y: this.lastpos.y + yPos };

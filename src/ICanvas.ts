@@ -2,7 +2,7 @@ import { IPoint } from './Point';
 
 interface ICanvas {
 
-  drawLine(length: number, color?: string): void;
+  drawLine(length: number, opacity?: number, color?: string): void;
 
   getAngle(): number;
 

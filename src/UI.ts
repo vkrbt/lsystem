@@ -88,8 +88,8 @@ export const setup = () => {
   const angleElem = document.getElementById('angle') as HTMLInputElement;
   const lineElem = document.getElementById('line') as HTMLInputElement;
   const rulesElem = document.getElementById('rules') as HTMLTextAreaElement;
-
   const presetsElem = document.getElementById('presets') as HTMLSelectElement;
+  const startAngleElem = document.getElementById('startangle') as HTMLInputElement;
 
   presets.forEach((preset) => {
     const option = document.createElement('option');
@@ -101,14 +101,22 @@ export const setup = () => {
 
   let lsystem = new LSystem(presets[0].axiom, parseRules(presets[0].rules));
 
-  const draw = (iterations: number, angle: number, lineLength: number) => {
+  const draw = (iterations: number, angle: number, lineLength: number, startangle: number) => {
     canvas.reset();
+    canvas.setAngle(startangle);
     Drawer.draw(lsystem.generate(iterations), angle, canvas, lineLength);
   };
 
   angleElem.value = `${presets[0].angle}`;
   rulesElem.value = `${presets[0].rules}`;
-  draw(+iterationsElem.value, +angleElem.value, +lineElem.value);
+  draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value);
+
+  startAngleElem.addEventListener('input', (e: any) => {
+    console.log(e);
+    if (e.currentTarget) {
+      draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +e.currentTarget.value);
+    }
+  });
 
   presetsElem.addEventListener('change', (e: any) => {
     const preset = presets.find((currentPreset: any) => currentPreset.name === e.target.value);
@@ -117,29 +125,35 @@ export const setup = () => {
       rulesElem.value = `${preset.rules}`;
       lsystem = new LSystem(preset.axiom, parseRules(preset.rules));
     }
-    draw(+iterationsElem.value, +angleElem.value, +lineElem.value);
+    draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value);
   });
 
   axiomElem.addEventListener('input', (e: any) => {
     if (e.currentTarget) {
       lsystem = new LSystem(e.currentTarget.value, rules);
+      draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value);
     }
-    draw(+iterationsElem.value, +angleElem.value, +lineElem.value);
   });
 
   iterationsElem.addEventListener('input', (e: any) => {
-    draw(+e.currentTarget.value, +angleElem.value, +lineElem.value);
+    if (e.currentTarget) {
+      draw(+e.currentTarget.value, +angleElem.value, +lineElem.value, +startAngleElem.value);
+    }
   });
   angleElem.addEventListener('input', (e: any) => {
-    draw(+iterationsElem.value, +e.currentTarget.value, +lineElem.value);
+    if (e.currentTarget) {
+      draw(+iterationsElem.value, +e.currentTarget.value, +lineElem.value, +startAngleElem.value);
+    }
   });
   lineElem.addEventListener('input', (e: any) => {
-    draw(+iterationsElem.value, +angleElem.value, +e.currentTarget.value);
+    if (e.currentTarget) {
+      draw(+iterationsElem.value, +angleElem.value, +e.currentTarget.value, +startAngleElem.value);
+    }
   });
   rulesElem.addEventListener('input', (e: any) => {
     if (e.currentTarget) {
       lsystem = new LSystem(axiomElem.value, parseRules(e.target.value));
+      draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value);
     }
-    draw(+iterationsElem.value, +angleElem.value, +lineElem.value);
   });
 };
