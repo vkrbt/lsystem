@@ -33,27 +33,27 @@ const presets = [
     angle: 120,
     axiom: 'F-G-G',
     name: 'Sierpinski triangle',
-    rules: 'F => F-G+F+G-F\nG => GG',
+    rules: 'F > F-G+F+G-F\nG > GG',
   }, {
     angle: 60,
     axiom: 'F',
     name: 'Sierpinski arrow head triangle',
-    rules: 'F => G-F-G\nG => F+G+F',
+    rules: 'F > G-F-G\nG > F+G+F',
   }, {
     angle: 90,
     axiom: 'FX',
     name: 'Dragon curve',
-    rules: 'X => X+YF+\nY => -FX-Y',
+    rules: 'X > X+YF+\nY > -FX-Y',
   }, {
     angle: 25,
     axiom: '+++X',
     name: 'Plant',
-    rules: 'X => F[-X][X]F[-X]+FX\nF => FF',
+    rules: 'X > F[-X][X]F[-X]+FX\nF > FF',
   }, {
     angle: 90,
     axiom: 'A',
     name: 'Hilbert Curve',
-    rules: 'A => -BF+AFA+FB-\nB => +AF-BFB-FA+',
+    rules: 'A > -BF+AFA+FB-\nB > +AF-BFB-FA+',
   },
 ];
 
@@ -99,21 +99,23 @@ export const setup = () => {
 
   const rules = parseRules(rulesElem.value);
 
-  let lsystem = new LSystem('F-G-G', rules);
+  let lsystem = new LSystem(presets[0].axiom, parseRules(presets[0].rules));
 
   const draw = (iterations: number, angle: number, lineLength: number) => {
     canvas.reset();
     Drawer.draw(lsystem.generate(iterations), angle, canvas, lineLength);
   };
 
+  angleElem.value = `${presets[0].angle}`;
+  rulesElem.value = `${presets[0].rules}`;
   draw(+iterationsElem.value, +angleElem.value, +lineElem.value);
 
   presetsElem.addEventListener('change', (e: any) => {
     const preset = presets.find((currentPreset: any) => currentPreset.name === e.target.value);
     if (preset) {
-      lsystem = new LSystem(preset.axiom, parseRules(preset.rules));
       angleElem.value = `${preset.angle}`;
       rulesElem.value = `${preset.rules}`;
+      lsystem = new LSystem(preset.axiom, parseRules(preset.rules));
     }
     draw(+iterationsElem.value, +angleElem.value, +lineElem.value);
   });
