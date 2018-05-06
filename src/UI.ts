@@ -73,8 +73,9 @@ export const setup = () => {
     elem.id = 'root';
     rootElement = elem;
   }
-
-  const canvas = new Canvas2D(window.innerWidth * 0.7, window.innerHeight, rootElement);
+  const canvasWidth = window.innerWidth < 768 ? window.innerWidth : window.innerWidth * 0.7;
+  const canvasHeight = window.innerWidth < 768 ? window.innerHeight * 0.5 : window.innerHeight;
+  const canvas = new Canvas2D(canvasWidth, canvasHeight, rootElement);
   const canvasSize = canvas.getSize();
   canvas.setLastPoint(
     {
@@ -112,7 +113,6 @@ export const setup = () => {
   draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value);
 
   startAngleElem.addEventListener('input', (e: any) => {
-    console.log(e);
     if (e.currentTarget) {
       draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +e.currentTarget.value);
     }
