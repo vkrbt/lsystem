@@ -1,13 +1,14 @@
-import { ICanvas } from './ICanvas';
+import { Canvas2D } from './Canvas';
 import { IPoint } from './Point';
 class Drawer {
-  public static draw(lsystemString: string, angle: number, canvas: ICanvas, length: number = 50) {
+  public static draw(lsystemString: string, angle: number, canvas: Canvas2D, length: number = 50, width: number = 1) {
     const stack: Array<{ point: IPoint, angle: number }> = [];
+    canvas.setLineWidth(width);
     lsystemString.split('').forEach((letter: string) => {
       switch (letter) {
         case 'F':
         case 'G':
-          canvas.drawLine(length, 0.5);
+          canvas.drawLine(length);
           return;
         case '+':
           canvas.rotate(angle);

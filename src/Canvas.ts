@@ -31,7 +31,6 @@ class Canvas2D implements ICanvas {
     // window.addEventListener('resize', this.resize);
   }
   public moveTo(x: number, y: number) {
-    this.ctx.beginPath();
     this.ctx.moveTo(x, y);
     this.lastpos = { x, y };
   }
@@ -79,6 +78,10 @@ class Canvas2D implements ICanvas {
       height: this.ctx.canvas.height,
       width: this.ctx.canvas.width,
     };
+  }
+
+  public setLineWidth(width: number) {
+    this.ctx.lineWidth = width;
   }
 
   public reset() {

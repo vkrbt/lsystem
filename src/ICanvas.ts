@@ -10,6 +10,8 @@ interface ICanvas {
 
   rotate(angle: number): void;
 
+  setLineWidth(width: number): void;
+
   clear(): void;
 
   getLastPoint(): IPoint;

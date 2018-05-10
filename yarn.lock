@@ -2,12 +2,6 @@
 # yarn lockfile v1
 
 
-"@avatsaev/three-orbitcontrols-ts@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@avatsaev/three-orbitcontrols-ts/-/three-orbitcontrols-ts-0.1.5.tgz#7987c7d34f2cfb7550cf0893368d24747a5487a8"
-  dependencies:
-    three "^0.84"
-
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
@@ -4701,10 +4695,6 @@ text-table@^0.2.0:
 textextensions@2:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/textextensions/-/textextensions-2.2.0.tgz#38ac676151285b658654581987a0ce1a4490d286"
-
-three@^0.84:
-  version "0.84.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.84.0.tgz#95be85a55a0fa002aa625ed559130957dcffd918"
 
 three@^0.92.0:
   version "0.92.0"
