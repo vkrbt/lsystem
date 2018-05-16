@@ -123,6 +123,7 @@ export const setup = () => {
     if (preset) {
       angleElem.value = `${preset.angle}`;
       rulesElem.value = `${preset.rules}`;
+      axiomElem.value = `${preset.axiom}`;
       lsystem = new LSystem(preset.axiom, parseRules(preset.rules));
     }
     draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value);
