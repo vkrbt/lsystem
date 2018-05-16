@@ -88,6 +88,7 @@ export const setup = () => {
   const iterationsElem = document.getElementById('iterations') as HTMLInputElement;
   const angleElem = document.getElementById('angle') as HTMLInputElement;
   const lineElem = document.getElementById('line') as HTMLInputElement;
+  const lineWidthElem = document.getElementById('linewidth') as HTMLInputElement;
   const rulesElem = document.getElementById('rules') as HTMLTextAreaElement;
   const presetsElem = document.getElementById('presets') as HTMLSelectElement;
   const startAngleElem = document.getElementById('startangle') as HTMLInputElement;
@@ -98,23 +99,35 @@ export const setup = () => {
     presetsElem.appendChild(option);
   });
 
-  const rules = parseRules(rulesElem.value);
+  let timeOutId: number;
 
   let lsystem = new LSystem(presets[0].axiom, parseRules(presets[0].rules));
-
-  const draw = (iterations: number, angle: number, lineLength: number, startangle: number) => {
-    canvas.reset();
-    canvas.setAngle(startangle);
-    Drawer.draw(lsystem.generate(iterations), angle, canvas, lineLength);
+  const draw = (iterations: number, angle: number, lineLength: number, startangle: number, width: number) => {
+    clearTimeout(timeOutId);
+    return setTimeout(() => {
+      canvas.reset();
+      canvas.setAngle(startangle);
+      requestAnimationFrame(() => {
+        Drawer.draw(lsystem.generate(iterations), angle, canvas, lineLength, width);
+      });
+    }, 0);
   };
 
   angleElem.value = `${presets[0].angle}`;
   rulesElem.value = `${presets[0].rules}`;
-  draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value);
+  axiomElem.value = `${presets[0].axiom}`;
+  let rules = parseRules(rulesElem.value);
+  timeOutId = draw(
+    +iterationsElem.value,
+    +angleElem.value,
+    +lineElem.value,
+    +startAngleElem.value,
+    +lineWidthElem.value,
+  );
 
   startAngleElem.addEventListener('input', (e: any) => {
     if (e.currentTarget) {
-      draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +e.currentTarget.value);
+      draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +e.currentTarget.value, +lineWidthElem.value);
     }
   });
 
@@ -126,35 +139,47 @@ export const setup = () => {
       axiomElem.value = `${preset.axiom}`;
       lsystem = new LSystem(preset.axiom, parseRules(preset.rules));
     }
-    draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value);
+    draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value, +lineWidthElem.value);
   });
 
   axiomElem.addEventListener('input', (e: any) => {
     if (e.currentTarget) {
       lsystem = new LSystem(e.currentTarget.value, rules);
-      draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value);
+      draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value, +lineWidthElem.value);
     }
   });
 
   iterationsElem.addEventListener('input', (e: any) => {
     if (e.currentTarget) {
-      draw(+e.currentTarget.value, +angleElem.value, +lineElem.value, +startAngleElem.value);
+      draw(+e.currentTarget.value, +angleElem.value, +lineElem.value, +startAngleElem.value, +lineWidthElem.value);
     }
   });
   angleElem.addEventListener('input', (e: any) => {
     if (e.currentTarget) {
-      draw(+iterationsElem.value, +e.currentTarget.value, +lineElem.value, +startAngleElem.value);
+      draw(+iterationsElem.value, +e.currentTarget.value, +lineElem.value, +startAngleElem.value, +lineWidthElem.value);
     }
   });
   lineElem.addEventListener('input', (e: any) => {
     if (e.currentTarget) {
-      draw(+iterationsElem.value, +angleElem.value, +e.currentTarget.value, +startAngleElem.value);
+      draw(
+        +iterationsElem.value,
+        +angleElem.value,
+        +e.currentTarget.value,
+        +startAngleElem.value,
+        +lineWidthElem.value,
+      );
     }
   });
   rulesElem.addEventListener('input', (e: any) => {
     if (e.currentTarget) {
-      lsystem = new LSystem(axiomElem.value, parseRules(e.target.value));
-      draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value);
+      rules = parseRules(e.currentTarget.value);
+      lsystem = new LSystem(axiomElem.value, rules);
+      draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value, +lineWidthElem.value);
+    }
+  });
+  lineWidthElem.addEventListener('input', (e: any) => {
+    if (e.currentTarget) {
+      draw(+iterationsElem.value, +angleElem.value, +lineElem.value, +startAngleElem.value, +e.currentTarget.value);
     }
   });
 };
