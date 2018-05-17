@@ -28,7 +28,6 @@ class Canvas2D implements ICanvas {
     this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     this.resize = this.resize.bind(this);
     this.opacity = opacity;
-    // window.addEventListener('resize', this.resize);
   }
   public moveTo(x: number, y: number) {
     this.ctx.moveTo(x, y);

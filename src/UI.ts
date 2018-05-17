@@ -45,15 +45,40 @@ const presets = [
     name: 'Dragon curve',
     rules: 'X > X+YF+\nY > -FX-Y',
   }, {
+    angle: 90,
+    axiom: 'A',
+    name: 'Hilbert Curve',
+    rules: 'A > -BF+AFA+FB-\nB > +AF-BFB-FA+',
+  }, {
     angle: 25,
     axiom: '+++X',
     name: 'Plant',
     rules: 'X > F[-X][X]F[-X]+FX\nF > FF',
   }, {
-    angle: 90,
-    axiom: 'A',
-    name: 'Hilbert Curve',
-    rules: 'A > -BF+AFA+FB-\nB > +AF-BFB-FA+',
+    angle: 25.7,
+    axiom: 'F',
+    name: 'Plant 1',
+    rules: 'F > F[+F]F[-F]F',
+  }, {
+    angle: 20,
+    axiom: 'F',
+    name: 'Plant 2',
+    rules: 'F > F[+F]F[-F][F]',
+  }, {
+    angle: 22.5,
+    axiom: 'F',
+    name: 'Plant 3',
+    rules: 'F > FF-[-F+F+F]+[+F-F-F]',
+  }, {
+    angle: 20,
+    axiom: 'X',
+    name: 'Plant 4',
+    rules: 'X > F[+X]F[-X]+X\nF > FF',
+  }, {
+    angle: 25.7,
+    axiom: 'X',
+    name: 'Plant 5',
+    rules: 'X > F[+X][-X]FX\nF > FF',
   },
 ];
 
